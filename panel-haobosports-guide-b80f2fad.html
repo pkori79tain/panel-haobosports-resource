@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>好博体育 · 知识库</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+      line-height: 1.6;
+      background: #f5fafc;
+      color: #1d363e;
+      padding: 1.5rem 1rem 2.5rem;
+    }
+
+    .wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* header / hero 区域 – 用网格感呈现目录入口 */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem 0.8rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #c3dfe6;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: #0d4a5a;
+      background: linear-gradient(145deg, #0f5b6e 0%, #2b7c8c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+    }
+
+    .hero .sub {
+      background: #e1f0f4;
+      padding: 0.3rem 1rem 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      color: #1d5c6a;
+      border: 1px solid #b2d4dd;
+      white-space: nowrap;
+    }
+
+    .hero .sub span {
+      font-weight: 500;
+    }
+
+    /* 知识库网格卡片 — 目录感布局 */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0 2.8rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 1.2rem 1rem 1rem;
+      box-shadow: 0 4px 10px rgba(32, 82, 94, 0.04), 0 0 0 1px #d0e5eb inset;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 18px rgba(28, 94, 110, 0.12), 0 0 0 1px #8ec0d0 inset;
+      transform: translateY(-3px);
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #0f4b5a;
+      border-left: 4px solid #2f9bb0;
+      padding-left: 0.65rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #2b4a54;
+      margin-bottom: 0.3rem;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #daeef5;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.9rem;
+      margin: 0.5rem 0.2rem 0 0;
+      color: #175a6a;
+      letter-spacing: 0.3px;
+    }
+
+    .tag.bluegreen {
+      background: #bde0e9;
+      color: #074552;
+    }
+
+    /* 说明区 (长段落) */
+    .intro-block {
+      background: #f0f8fb;
+      border-radius: 18px;
+      padding: 1.6rem 1.8rem;
+      margin: 2.5rem 0 2rem;
+      border-left: 8px solid #4199ae;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .intro-block p {
+      margin-bottom: 1rem;
+    }
+
+    .intro-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .intro-block .sentence-link {
+      font-weight: 500;
+      color: #136f83;
+    }
+
+    /* 提示区 – 带信息卡片 */
+    .info-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 2rem 0 1.8rem;
+    }
+
+    .info-item {
+      flex: 1 1 180px;
+      background: white;
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      border: 1px solid #d1e3ea;
+    }
+
+    .info-item .emoji-marker {
+      font-size: 1.2rem;
+      margin-right: 0.4rem;
+    }
+
+    .info-item strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #0d4d5c;
+      margin-bottom: 0.3rem;
+    }
+
+    .info-item p {
+      font-size: 0.85rem;
+      color: #2d5561;
+    }
+
+    /* FAQ 摘要区 – 简洁手风琴感 */
+    .faq-summary {
+      background: #ffffffec;
+      border-radius: 22px;
+      padding: 1.8rem 1.5rem 1.5rem;
+      margin: 2.2rem 0 2.8rem;
+      box-shadow: 0 2px 10px rgba(28, 82, 94, 0.04);
+      border: 1px solid #d1e4ec;
+    }
+
+    .faq-summary h2 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #0d4e5e;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px dashed #c4dbe4;
+      padding: 0.6rem 0 0.6rem;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-q {
+      font-weight: 500;
+      color: #115b6d;
+    }
+
+    .faq-a {
+      margin-top: 0.2rem;
+      font-size: 0.9rem;
+      color: #2b5865;
+      padding-left: 0.2rem;
+    }
+
+    .faq-a a {
+      color: #1e7a8f;
+      font-weight: 500;
+    }
+
+    /* 相关信息区 – 轻脚注 */
+    .related-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.8rem;
+      justify-content: space-between;
+      background: #eaf4f8;
+      border-radius: 30px;
+      padding: 1rem 1.8rem;
+      font-size: 0.85rem;
+      color: #1a5b6b;
+      margin: 1.5rem 0 0.8rem;
+    }
+
+    .related-info .badge {
+      background: #cbe2ea;
+      border-radius: 40px;
+      padding: 0.2rem 1rem;
+      font-weight: 500;
+    }
+
+    /* 小屏适应 */
+    @media (max-width: 580px) {
+      body {
+        padding: 0.8rem 0.7rem 2rem;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .grid-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .intro-block {
+        padding: 1.2rem;
+      }
+
+      .faq-summary {
+        padding: 1.2rem 1rem;
+      }
+
+      .info-item {
+        flex: 1 1 100%;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .grid-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 内联链接色 */
+    a {
+      color: #1a7286;
+      text-decoration: none;
+      border-bottom: 1px dotted #8dbccd;
+    }
+
+    a:hover {
+      color: #084654;
+      border-bottom: 1px solid #4199ae;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #cbe0e7;
+      margin: 2rem 0 1rem;
+    }
+
+    .footnote {
+      font-size: 0.8rem;
+      color: #48737f;
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <!-- hero / 目录标题 -->
+  <header class="hero">
+    <h1>好博体育 · 知识库</h1>
+    <div class="sub"><span>⏺ 索引</span> · 方向 · 说明</div>
+  </header>
+
+  <!-- 网格卡片：目录入口感 -->
+  <div class="grid-cards">
+    <div class="card">
+      <h3>📋 运动项目</h3>
+      <p>足球 · 篮球 · 网球 · 电竞</p>
+      <span class="tag">赛事</span><span class="tag bluegreen">数据</span>
+    </div>
+    <div class="card">
+      <h3>📊 数据看板</h3>
+      <p>统计趋势 · 实时动态 · 历史对比</p>
+      <span class="tag">图表</span><span class="tag bluegreen">分析</span>
+    </div>
+    <div class="card">
+      <h3>🧭 平台指南</h3>
+      <p>功能说明 · 模块入口 · 操作路径</p>
+      <span class="tag">手册</span><span class="tag bluegreen">导航</span>
+    </div>
+    <div class="card">
+      <h3>📁 资源归档</h3>
+      <p>规则 · 术语 · 更新记录</p>
+      <span class="tag">文库</span><span class="tag bluegreen">参考</span>
+    </div>
+  </div>
+
+  <!-- 说明区 — 叙述感段落 -->
+  <div class="intro-block">
+    <p>无论你关注的是联赛排位、即时数据还是某一项运动的深度信息，<a href="https://panel-haobosports.com">好博体育</a>都提供了一个相对完整的知识支撑体系。这里不是为了追逐短暂的资讯热点，而是希望把体育内容背后那些相对稳定的知识结构整理出来，让浏览者可以按图索骥。</p>
+    <p>过去几年里，体育数据与观赛方式都在发生变化。从单纯的比分记录到多维度的统计数据，再到不同运动项目的交互展示，信息密度在增加。与此同时，对可靠内容入口的需求也在增长。一个好的起点，往往比散落的信息更有价值。</p>
+    <p>所以这个页面像是一张折叠的地图：你可以从任意一块卡片切入，也可以顺着下面的提示与摘要，找到自己需要的上下文。</p>
+  </div>
+
+  <!-- 提示区 + 附加信息卡片 -->
+  <div class="info-panel">
+    <div class="info-item">
+      <span class="emoji-marker">🔍</span><strong>使用提示</strong>
+      <p>遇到不熟悉的术语或模块? 不妨先浏览“平台指南”卡片，了解基础分类。</p>
+    </div>
+    <div class="info-item">
+      <span class="emoji-marker">🔄</span><strong>动态参考</strong>
+      <p>数据看板区域内容会随赛季推进而更新，历史归档可供对比。</p>
+    </div>
+    <div class="info-item">
+      <span class="emoji-marker">🧩</span><strong>主题延伸</strong>
+      <p>从单一场次到整体趋势，每个卡片背后都有更细化的知识板块。</p>
+    </div>
+  </div>
+
+  <!-- FAQ 摘要 (叙述感，并非完全问答格式) -->
+  <div class="faq-summary">
+    <h2>❔ 常见话题摘要</h2>
+    <div class="faq-item">
+      <div class="faq-q">· 平台覆盖哪些运动项目？</div>
+      <div class="faq-a">以主流团队项目与个人项目为主，同时包含部分电竞项目。具体条目可以参考“运动项目”卡片。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">· 如何快速找到某个联赛的历史数据？</div>
+      <div class="faq-a">建议先进入“数据看板”模块，再按运动分类筛选。如果需要更早的存档，可以查阅资源归档部分。相关路径在 <a href="https://panel-haobosports.com">好博体育</a> 内部有明确指引。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">· 页面上的知识库会更新吗？</div>
+      <div class="faq-a">会。随着平台功能和内容的调整，知识库会做对应补充与修订，保持与实际入口一致。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">· 我是一名新用户，从哪里开始最直接？</div>
+      <div class="faq-a">可以从“平台指南”卡片入手，先了解主要模块和用途，再根据兴趣深入到具体运动或数据模块。</div>
+    </div>
+  </div>
+
+  <!-- 相关信息区 (轻脚注感) -->
+  <div class="related-info">
+    <span><span class="badge">📘 相关内容</span> 赛事规则 · 数据字段 · 版本说明</span>
+    <span>🧾 引用入口 · 好博体育</span>
+  </div>
+
+  <hr>
+
+  <div class="footnote">
+    知识库入口 · 信息结构参考 · 基于实际内容整理
+  </div>
+  <!-- 隐藏种子仅用于变化，不显示 -->
+</div>
+</body>
+</html>
